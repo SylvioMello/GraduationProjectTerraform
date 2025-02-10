@@ -94,3 +94,21 @@ resource "aws_instance" "srsRAN_K8s" {
     Name = "srsRAN_K8s"
   }
 }
+
+resource "aws_instance" "srsRAN_BareMetal" {
+  ami                    = data.aws_ami.ubuntu_2204.id
+  instance_type          = "t3.medium"
+  subnet_id              = local.subnet_id
+  key_name               = local.key_name
+  vpc_security_group_ids = [data.aws_security_group.instance-sg-test.id]
+
+  # user_data for K8s installation
+  user_data = <<-EOF
+    #cloud-config
+    hostname: "srsRAN_BareMetal"
+  EOF
+
+  tags = {
+    Name = "srsRAN_BareMetal"
+  }
+}
