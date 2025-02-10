@@ -79,7 +79,7 @@ data "aws_ami" "ubuntu_2204" {
 
 resource "aws_instance" "srsRAN_K8s" {
   ami                    = data.aws_ami.ubuntu_2204.id
-  instance_type          = "t3.medium"
+  instance_type          = "t3.large"
   subnet_id              = local.subnet_id
   key_name               = local.key_name
   vpc_security_group_ids = [data.aws_security_group.instance-sg-test.id]
@@ -97,7 +97,7 @@ resource "aws_instance" "srsRAN_K8s" {
 
 resource "aws_instance" "srsRAN_BareMetal" {
   ami                    = data.aws_ami.ubuntu_2204.id
-  instance_type          = "t3.medium"
+  instance_type          = "t3.large"
   subnet_id              = local.subnet_id
   key_name               = local.key_name
   vpc_security_group_ids = [data.aws_security_group.instance-sg-test.id]
