@@ -43,24 +43,6 @@ data "aws_security_group" "instance-sg-test" {
   id = "sg-098bf189e29bce82d"
 }
 
-resource "aws_instance" "testFree5GC" {
-  ami                    = local.ami_id
-  instance_type          = local.instance_type
-  key_name               = local.key_name
-  vpc_security_group_ids = [data.aws_security_group.instance-sg-test.id]
-
-  user_data = <<-EOF
-    #cloud-config
-    hostname: "testFree5GC"
-  EOF
-
-  tags = {
-    Name = "testFree5GC"
-  }
-
-  subnet_id = local.subnet_id
-}
-
 data "aws_ami" "ubuntu_2204" {
   most_recent = true
 
@@ -79,7 +61,7 @@ data "aws_ami" "ubuntu_2204" {
 
 resource "aws_instance" "srsRAN_K8s" {
   ami                    = data.aws_ami.ubuntu_2204.id
-  instance_type          = "t3.large"
+  instance_type          = "t3.xlarge"
   subnet_id              = local.subnet_id
   key_name               = local.key_name
   vpc_security_group_ids = [data.aws_security_group.instance-sg-test.id]
